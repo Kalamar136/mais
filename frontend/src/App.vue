@@ -4,33 +4,51 @@
       class="bg-white p-10 rounded-xl shadow-xl border-solid border-2 border-gray-100"
     >
       <div>
-        <p class="text-2xl">Garbage Classification</p>
-        <div>
+        <div v-if="state==0">
+          <p class="text-2xl mb-2">Garbage Classification</p>
+          <p>Select an image to upload:</p>
           <div
-            class="needToUpload"
+            class="uploadedBox"
+            :class="toSend ? 'uploaded' : 'needToUpload'"
             @click="chooseFile"
             :style="{ 'background-image': `url(${preview})` }"
-          ></div>
-          <div>
+          >
+            <p :class="toSend ? 'hidden' : ''">Click to upload an image</p>
+            <p :class="toSend ? '' : 'hidden'">Click to upload a new image</p>
+          </div>
+          <div class="">
             <input
-              class="form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+              class="hidden form-control block w-full px-2 py-1 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               ref="image"
               v-on:change="handleFileUpload()"
               type="file"
             />
           </div>
-          <div v-if="toSend">
-            <button @click="uploadFile()">Upload</button>
+          <div class="w-full text-right flex justify-end">
+            <button
+              :class="!toSend ? 'disabled' : 'blue'"
+              :disabled="!toSend"
+              class="btn"
+              @click="uploadFile()"
+            >
+              Upload &rarr;
+            </button>
           </div>
         </div>
+        <div v-if="state==1">
+          <LoadingPage/></div>
+        <div v-if="state==2"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import LoadingPage from './components/LoadingPage.vue'
 import axios from "axios";
 import { ref } from "vue";
+
+const state = ref(0)
 
 const image = ref(null);
 
@@ -53,16 +71,8 @@ const chooseFile = () => {
 const uploadFile = () => {
   let formData = new FormData();
   formData.append("file", toSend.value);
+  state.value = 1
   console.log("sending");
-  // axios
-  //   .get("http://localhost:5000")
-  //   .then(function (response) {
-  //     console.log(response);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-  // console.log("got");
   axios
     .post("http://3.89.138.240:5000/upload", formData, {
       headers: {
@@ -70,6 +80,7 @@ const uploadFile = () => {
       },
     })
     .then(function (response) {
+      state.value = 2
       console.log(response);
     })
     .catch(function (error) {
@@ -80,7 +91,7 @@ const uploadFile = () => {
 
 <style scoped lang="css">
 * {
-  @apply transition-all
+  @apply transition-all;
 }
 .previewBlock {
   display: block;
@@ -92,8 +103,28 @@ const uploadFile = () => {
   background-size: cover;
 }
 
+.btn {
+  @apply py-3 px-5 rounded-full mt-2;
+}
+
+.blue {
+  @apply bg-blue-400 hover:bg-blue-600 text-white;
+}
+
+.disabled {
+  @apply bg-gray-300 text-black;
+}
+
+.uploadedBox {
+  @apply flex items-center justify-center cursor-pointer h-96 w-96 m-0 my-2 rounded-xl bg-contain bg-no-repeat bg-center border-2 border-solid border-gray-200;
+}
+
 .needToUpload {
-  @apply block cursor-pointer h-96 w-96 bg-gray-100 hover:bg-gray-200 m-0 my-2 border-dashed border-4 border-gray-600 bg-contain bg-no-repeat bg-center;
+  @apply flex text-gray-400 hover:text-gray-500 bg-gray-100 hover:bg-gray-200 m-0 my-2 border-dashed border-4 border-gray-300;
+}
+
+.uploaded {
+  @apply text-transparent hover:text-white hover:bg-red-400 hover:!bg-none hover:border-dashed hover:border-4 hover:border-red-500;
 }
 
 .input {

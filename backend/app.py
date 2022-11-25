@@ -33,8 +33,12 @@ def upload_file():
     print(x.shape)
     results = model2.predict(x)[0]
 
-    for r in results:
-        print(r)
+    labels = ['Battery', 'Biological', 'Brown Glass', 'Cardboard', 'Clothes', 'Green Glass', 'Metal', 'Paper', 'Plastic', 'Shoes', 'Trash', 'White Glass']
+
+    ret = dict()
+
+    for r in range(len(labels)):
+        ret[labels[r]] = results[r]
 
 
     # print(request.file)
@@ -42,7 +46,7 @@ def upload_file():
     # if uploaded_file.filename != '':
     #     uploaded_file.save(uploaded_file.filename)
     # return redirect(url_for('index'))
-    return dict()
+    return ret
 
 @app.route('/')
 def simple():

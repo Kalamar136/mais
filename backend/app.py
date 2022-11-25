@@ -31,7 +31,12 @@ def upload_file():
     x = np.expand_dims(img, axis=0)
 
     print(x.shape)
-    print(model2.predict(x))
+    results = model2.predict(x)[0]
+
+    for r in results:
+        print(r)
+
+
     # print(request.file)
     # uploaded_file = request.files['file']
     # if uploaded_file.filename != '':

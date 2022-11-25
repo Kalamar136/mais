@@ -39,7 +39,7 @@ def upload_file():
     ret = dict()
 
     for r in range(len(labels)):
-        ret[labels[r]] = json.dumps(results[r])
+        ret[labels[r]] = json.dumps(results[r].item())
 
 
     # print(request.file)

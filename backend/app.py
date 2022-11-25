@@ -3,9 +3,11 @@ from flask_cors import CORS
 
 import tensorflow as tf
 import numpy as np
-import keras
+from tensorflow import keras
 import cv2 as cv
 from keras.preprocessing import image
+
+model2 = keras.models.load_model('model')
 
 app = Flask(__name__)
 cors = CORS(app, resources={r'/*': {"origins": '*'}})
@@ -16,15 +18,20 @@ cors = CORS(app, resources={r'/*': {"origins": '*'}})
 def upload_file():
     formData = request.files.get('file','')
     print(type(formData))
+
     filestr = formData.read()
     #convert string data to numpy array
     npimg = np.fromstring(filestr, np.uint8)
-# convert numpy array to image
+    # convert numpy array to image
     img = cv.imdecode(npimg, cv.IMREAD_COLOR)
-    # img = formData.load_img(formData, target_size(128, 128))
-    # x = image.img_to_array(img)
-    # x = np.expand_dims(x, axis=0)
     print(img.shape)
+
+    img = cv.resize(img, (128,128))
+    print(img.shape)
+    x = np.expand_dims(img, axis=0)
+
+    print(x.shape)
+    print(model2.predict(x))
     # print(request.file)
     # uploaded_file = request.files['file']
     # if uploaded_file.filename != '':

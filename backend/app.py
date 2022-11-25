@@ -6,6 +6,7 @@ import numpy as np
 from tensorflow import keras
 import cv2 as cv
 from keras.preprocessing import image
+import json
 
 model2 = keras.models.load_model('model')
 
@@ -38,7 +39,7 @@ def upload_file():
     ret = dict()
 
     for r in range(len(labels)):
-        ret[labels[r]] = results[r]
+        ret[labels[r]] = json.dumps(results[r])
 
 
     # print(request.file)

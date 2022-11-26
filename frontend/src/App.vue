@@ -37,7 +37,9 @@
         </div>
         <div v-if="state==1">
           <LoadingPage/></div>
-        <div v-if="state==2"></div>
+        <div v-if="state==2">
+          <ResultsDisplay :results="results" />
+        </div>
       </div>
     </div>
   </div>
@@ -45,12 +47,15 @@
 
 <script setup>
 import LoadingPage from './components/LoadingPage.vue'
+import ResultsDisplay from './components/ResultsDisplay.vue'
 import axios from "axios";
 import { ref } from "vue";
 
 const state = ref(0)
 
 const image = ref(null);
+
+const results = ref(null)
 
 const toSend = ref(null);
 const preview = ref(null);
@@ -81,6 +86,7 @@ const uploadFile = () => {
     })
     .then(function (response) {
       state.value = 2
+      results.value = JSON.parse(response.data)
       console.log(response);
     })
     .catch(function (error) {

@@ -92,7 +92,7 @@ const uploadFile = () => {
   state.value = 1;
   console.log("sending");
   axios
-    .post("http://20.121.50.123:5000/upload", formData, {
+    .post("http://localhost:5000/upload", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

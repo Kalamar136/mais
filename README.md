@@ -10,8 +10,10 @@ This is a web app that classifies images into 12 different categories of materia
 
 ## Running the app
 
-Currently the frontend URLs are hardcoded to an azure server. Change the address that the frontend queries to whereever your flask backend will be booted up.
+Currently the backend server URLs in the frontend are hardcoded to localhost, port 5000. Flask defaults to port 5000.
 
-Then, install all requirements for the app. Launch the app with `flask run` in the `backend` directory.
+To setup the backend, initiate a python virtual environment if desired. Run `pip install -r requirements.txt` inside `backend` to install all required packages.
 
-Launch the frontend from the `frontend` directory with `yarn run serve` after doing a `yarn install` to get all prerequesites.
+Then, start the server with `flask run`.
+
+To setup the frontend, navigate to the `frontend` folder and run `yarn install` to install all packages. Then run `yarn serve` to start at the webserver. All commands can also be done with `npm`.

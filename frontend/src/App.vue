@@ -4,7 +4,7 @@
       class="bg-white p-10 rounded-xl shadow-xl border-solid border-2 border-gray-100"
     >
       <div>
-        <div v-if="state==0">
+        <div v-if="state == 0">
           <p class="text-2xl mb-2">Garbage Classification</p>
           <p>Select an image to upload:</p>
           <div
@@ -35,22 +35,33 @@
             </button>
           </div>
         </div>
-        <div v-if="state==1">
-          <LoadingPage/></div>
-        <div v-if="state==2"></div>
+        <div v-if="state == 1">
+          <LoadingPage />
+        </div>
+        <div v-if="state == 2">
+          <div v-if="results">
+            <ResultsDisplay :results="results" />
+          </div>
+          <div class="w-full text-center md:text-left">
+            <button class="btn blue" @click="reset()">&larr; Retry</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import LoadingPage from './components/LoadingPage.vue'
+import LoadingPage from "./components/LoadingPage.vue";
+import ResultsDisplay from "./components/ResultsDisplay.vue";
 import axios from "axios";
 import { ref } from "vue";
 
-const state = ref(0)
+const state = ref(0);
 
 const image = ref(null);
+
+const results = ref(null);
 
 const toSend = ref(null);
 const preview = ref(null);
@@ -68,10 +79,17 @@ const chooseFile = () => {
   image.value.click();
 };
 
+const reset = () => {
+  results.value = null;
+  preview.value = null;
+  toSend.value = null;
+  state.value = 0;
+};
+
 const uploadFile = () => {
   let formData = new FormData();
   formData.append("file", toSend.value);
-  state.value = 1
+  state.value = 1;
   console.log("sending");
   axios
     .post("http://20.121.50.123:5000/upload", formData, {
@@ -80,7 +98,8 @@ const uploadFile = () => {
       },
     })
     .then(function (response) {
-      state.value = 2
+      state.value = 2;
+      results.value = response.data;
       console.log(response);
     })
     .catch(function (error) {
@@ -116,7 +135,7 @@ const uploadFile = () => {
 }
 
 .uploadedBox {
-  @apply flex items-center justify-center cursor-pointer h-96 w-96 m-0 my-2 rounded-xl bg-contain bg-no-repeat bg-center border-2 border-solid border-gray-200;
+  @apply flex items-center justify-center cursor-pointer h-48 md:h-96 w-full md:w-96 m-0 my-2 rounded-xl bg-contain bg-no-repeat bg-center border-2 border-solid border-gray-200;
 }
 
 .needToUpload {

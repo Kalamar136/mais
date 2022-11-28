@@ -1,5 +1,17 @@
-We chose the pre-approved project “Garbage Classification” because we liked the idea of a system that automatically detects and classifies pieces of garbage. We thought of a unique application, for example: Garbage laying on a conveyer belt, and passing through an automatic sorting system. The system would use cameras to detect which locations on the conveyer belt contain the type of garbage. A robotic arm would then be able to sort the system. 
+# Garbage Classification Model
 
-However, this application is better suited for industries. What we hope to accomplish is to build an app, where the user can take a picture of a collection of garbage. A moving window would then capture the locations that contain a specific type of garbage.  
+Final project for McGill AI Society Intro to ML Bootcamp by Karl, Tofic, and Tristan.
 
-The moving window dimensions would have to be of a specific dimension (hyperparameter), to optimize the classification accuracy. The pixels of the fixed windows would then be merged to create a patch of a specific garbage type. This way, we can calculate how much percent the image contains of a garbage class by calculating patch_pixels/image_pixels*100. 
+Training data retieved from [Kaggle](https://www.kaggle.com/datasets/mostafaabla/garbage-classification).
+
+## Project Description
+
+This is a web app that classifies images into 12 different categories of materials commonly found in the garbage. The classification is done with RESNET in Tensorflow and the backend is built with Flask while the frontend is done with Vue and Tailwind.
+
+## Running the app
+
+Currently the frontend URLs are hardcoded to an azure server. Change the address that the frontend queries to whereever your flask backend will be booted up.
+
+Then, install all requirements for the app. Launch the app with `flask run` in the `backend` directory.
+
+Launch the frontend from the `frontend` directory with `yarn run serve` after doing a `yarn install` to get all prerequesites.

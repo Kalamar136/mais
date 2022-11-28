@@ -2,25 +2,27 @@
   <div class="w-[70vw]">
     <div class="w-full text-center">
       <p>We think that is a:</p>
-      <p class="text-xl">{{maxKey}}</p>
+      <p class="my-2 text-2xl">{{ maxKey }}</p>
     </div>
-    <div class="flex">
-      <div class="w-1/12 h-full" :key="key" v-for="key in keys">
-        <div>
-          <div class="h-[50vh] relative">
-            <SingleBar
-              :color="colors[key]"
-              :max="max"
-              :value="Number(props.results[key])"
-            />
-          </div>
-          <div class="h-12 text-center">
-            {{ key }}
+    <div class="hidden md:visible lg:visible">
+      <div class="flex">
+        <div class="w-1/12 h-full" :key="key" v-for="key in keys">
+          <div>
+            <div class="h-[50vh] relative">
+              <SingleBar
+                :color="colors[key]"
+                :max="max"
+                :value="Number(props.results[key])"
+              />
+            </div>
+            <div class="h-12 text-center">
+              {{ key }}
+            </div>
           </div>
         </div>
       </div>
+      <div class="w-full text-center">Probability of each classification</div>
     </div>
-    <div class="w-full text-center">Probability of each classification</div>
   </div>
 </template>
 <script setup>
@@ -50,5 +52,5 @@ const values = computed(() => Object.values(props.results).map(Number));
 
 const max = computed(() => Math.max.apply(false, values.value));
 
-const maxKey = computed(() => keys.value[values.value.indexOf(max.value)])
+const maxKey = computed(() => keys.value[values.value.indexOf(max.value)]);
 </script>

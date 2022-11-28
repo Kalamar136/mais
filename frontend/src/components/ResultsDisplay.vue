@@ -3,8 +3,10 @@
     <div class="w-full text-center">
       <p>We think that is a:</p>
       <p class="my-2 text-2xl">{{ maxKey }}</p>
+      <p>Which should be put in the</p>
+      <p class="my-1 text-xl">{{classification[maxKey]}}</p>
     </div>
-    <div class="hidden md:visible lg:visible">
+    <div class="sm:hidden md:block">
       <div class="flex">
         <div class="w-1/12 h-full" :key="key" v-for="key in keys">
           <div>
@@ -44,6 +46,21 @@ const colors = {
   Shoes: "bg-fuchsia-400",
   Trash: "bg-pink-700",
   "White Glass": "bg-rose-500",
+};
+
+const classification = {
+  Battery: "Recycle",
+  Biological: "Compost",
+  "Brown Glass": "Recycle",
+  Cardboard: "Recycle",
+  Clothes: "Trash",
+  "Green Glass": "Recycle",
+  Metal: "Recycle",
+  Paper: "Recycle",
+  Plastic: "Recycle",
+  Shoes: "Trash",
+  Trash: "Trash",
+  "White Glass": "Recycle",
 };
 
 const keys = computed(() => Object.keys(props.results));

@@ -42,7 +42,7 @@
           <div v-if="results">
             <ResultsDisplay :results="results" />
           </div>
-          <div class="w-full text-center md:text-left lg:text-left">
+          <div class="w-full text-center md:text-left">
             <button class="btn blue" @click="reset()">&larr; Retry</button>
           </div>
         </div>
@@ -135,7 +135,7 @@ const uploadFile = () => {
 }
 
 .uploadedBox {
-  @apply flex items-center justify-center cursor-pointer h-48 md:h-96 lg:h-96 w-full md:w-96 lg:w-96 m-0 my-2 rounded-xl bg-contain bg-no-repeat bg-center border-2 border-solid border-gray-200;
+  @apply flex items-center justify-center cursor-pointer h-48 md:h-96 w-full md:w-96 m-0 my-2 rounded-xl bg-contain bg-no-repeat bg-center border-2 border-solid border-gray-200;
 }
 
 .needToUpload {

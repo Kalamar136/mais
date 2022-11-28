@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full md:w-96 lg:w-96 text-center my-8">
+  <div class="w-full md:w-96 text-center my-8">
     <p class="text-gray-500">Predicting...</p>
     <div class="mt-4 flex justify-center">
       <div role="status">
